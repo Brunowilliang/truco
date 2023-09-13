@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "Contador de Truco",
+    "slug": "contador-de-truco",
+    "description": "Contador de Truco",
+    "version": "2.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#2666DE"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "tsconfigPaths": true
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bruno.truco",
+      "buildNumber": "2.0.1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#2666DE"
+      },
+      "package": "com.bruno.truco",
+      "versionCode": 6
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "64692803-8376-4c3f-a2ce-c96d8618782e"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/64692803-8376-4c3f-a2ce-c96d8618782e"
+    },
+    "owner": "brunowilliang"
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-9513215669385884~8690869692",
+    "ios_app_id": "ca-app-pub-9513215669385884~9140665524"
+  }
+}

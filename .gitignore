@@ -1,0 +1,52 @@
+# Dependências
+node_modules/
+
+# Diretórios gerados pelo Expo
+.expo/
+dist/
+web-build/
+ios/
+android/
+.tamagui/
+
+# Arquivos de lock
+bun.lockb
+yarn.lock
+package-lock.json
+
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+*.orig.keystore
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+*.log
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# env files
+expo-env.d.ts
+*.env
+
+# Outros arquivos e diretórios que você pode querer ignorar
+pc-api-*.json
