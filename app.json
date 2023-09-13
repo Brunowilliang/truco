@@ -26,7 +26,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.bruno.truco",
-      "buildNumber": "2.0.2"
+      "buildNumber": "2.0.3"
     },
     "androidStatusBar": {
       "translucent": true
@@ -41,7 +41,7 @@
         "backgroundColor": "#2666DE"
       },
       "package": "com.bruno.truco",
-      "versionCode": 7
+      "versionCode": 8
     },
     "plugins": [
       "expo-router",
