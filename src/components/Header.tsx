@@ -15,13 +15,12 @@ export default function Header(props: Props) {
 
   return (
     <XStack
-      pt={top + 15}
+      pt={top + 10}
       pb={10}
       px={20}
       bg={colors.secondary}
       ai={'center'}
       jc={'flex-end'}
-      mb={20}
       {...props}
     >
       <Stack

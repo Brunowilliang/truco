@@ -1,10 +1,10 @@
 import React from 'react'
 import { Stack } from 'tamagui'
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import { Platform } from 'react-native';
+import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+import { getAdUnitId } from '@/utils/adConfig';
 
 export default function Footer() {
-  const adUnitId = __DEV__ ? TestIds.BANNER : Platform.OS === 'ios' ? "ca-app-pub-9513215669385884/4610479298" : "ca-app-pub-9513215669385884/4993622670";
+  const adUnitId = getAdUnitId('home_banner');
 
   return (
     <Stack w="100%" jc="center" ai="center" my={10}>

@@ -9,20 +9,19 @@ import Header from '@/components/Header'
 import { useScoreStore } from '@/store/useScoreStore'
 import Modal, { ModalProps } from '@/components/ui/Modal'
 import { Text } from '@/components/ui/Text'
-import { DeviceEventEmitter, Platform, TouchableOpacity } from 'react-native'
 import About from '@/components/About'
 import Donate from '@/components/Donate'
-import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads'
+import { useInterstitialAd } from 'react-native-google-mobile-ads'
+import { getAdUnitId } from '@/utils/adConfig'
 
 export default function index() {
   const { bottom } = useSafeAreaInsets()
   const {finishedGame, setFinishedGame} = useScoreStore()
   const modal = useRef<ModalProps>(null)
   const modalDonate = useRef<ModalProps>(null)
+  const adUnitId = getAdUnitId('home_Intersticial');
 
-  const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : Platform.OS === 'ios' ? "ca-app-pub-9513215669385884/3288275875" : "ca-app-pub-9513215669385884/4195546323"
-
-  const { isLoaded, load, show } = useInterstitialAd(adUnitId, {
+  const { isLoaded, load, show } = useInterstitialAd(adUnitId, { 
     requestNonPersonalizedAdsOnly: true,
   });
 
@@ -42,8 +41,8 @@ export default function index() {
   
   return (
     <>
-      <ScrollView contentContainerStyle={{ flex: 1 }} pb={bottom} bg={colors.background}>
-        <Header onPress={() => modal.current?.open() } />
+      <Header onPress={() => modal.current?.open() } />
+      <ScrollView contentContainerStyle={{ flex: 1 }} pt={20} pb={bottom} bg={colors.background}>
         <XStack f={1} px={20} bg={colors.background} gap={10} >
           <Counter teamName='Equipe A' />
           <Separator />
@@ -54,7 +53,7 @@ export default function index() {
 
       <Modal
         ref={modal}
-        snapPoints={['40%', '40%']}
+        snapPoints={['40%']}
         title="Sobre o jogo"
         rightComponent={
           <Text fontSize={'$h6'}>v.2.0.0</Text>
@@ -65,7 +64,7 @@ export default function index() {
 
       <Modal
         ref={modalDonate}
-        snapPoints={['73%', '73%']}
+        snapPoints={['73%']}
         title="Doação"
       >
         <Donate />

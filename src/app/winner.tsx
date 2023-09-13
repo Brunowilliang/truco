@@ -1,37 +1,34 @@
-import { Text } from '@/components/ui/Text'
-import { useGlobalSearchParams, useRouter } from 'expo-router'
-import React, { useEffect, useRef } from 'react'
-import { Dimensions, Platform } from 'react-native'
-import { Stack } from 'tamagui'
+import React, { useEffect, useRef } from 'react';
+import { Dimensions } from 'react-native';
+import { useGlobalSearchParams, useRouter } from 'expo-router';
+import { Stack } from 'tamagui';
 import LottieView from 'lottie-react-native';
-import { colors } from '@/styles/theme'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Button } from '@/components/ui/Button'
-import { useScoreStore } from '@/store/useScoreStore'
-import { useInterstitialAd, InterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : Platform.OS === 'ios' ? "ca-app-pub-9513215669385884/8177640471" : "ca-app-pub-9513215669385884/6672987119"
+import { Text } from '@/components/ui/Text';
+import { Button } from '@/components/ui/Button';
+import { useScoreStore } from '@/store/useScoreStore';
+import { colors } from '@/styles/theme';
+import { useInterstitialAd } from 'react-native-google-mobile-ads';
+import { getAdUnitId } from '@/utils/adConfig';
 
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  requestNonPersonalizedAdsOnly: true,
-});
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
-export default function winner() {
+export default function Winner() {
   const router = useRouter();
-  const params = useGlobalSearchParams<{ name: string }>()
+  const params = useGlobalSearchParams<{ name: string }>();
   const { setFinishedGame } = useScoreStore();
   const { top } = useSafeAreaInsets();
-
-  const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : Platform.OS === 'ios' ? "ca-app-pub-9513215669385884/8177640471" : "ca-app-pub-9513215669385884/6672987119"
-
-  const { isLoaded, isClosed, load, show } = useInterstitialAd(adUnitId, {
+  const adUnitId = getAdUnitId('winner_Intersticial');
+  const animation = useRef(null);
+  const { isLoaded, load, show } = useInterstitialAd(adUnitId, {
     requestNonPersonalizedAdsOnly: true,
   });
 
   useEffect(() => {
     load();
   }, [load]);
-
 
   const resetGame = () => {
     if (isLoaded) {
@@ -41,11 +38,7 @@ export default function winner() {
     router.push({
       pathname: '/',
     });
-  }
-  
-  const WIDHT = Dimensions.get('window').width;
-  const HEIGHT = Dimensions.get('window').height;
-  const animation = useRef(null);
+  };
 
   const Confetti = () => {
     return (
@@ -56,7 +49,7 @@ export default function winner() {
         style={{
           alignSelf: 'center',
           position: 'absolute',
-          width: WIDHT,
+          width: WIDTH,
           height: HEIGHT * 0.9,
         }}
         source={require('@/assets/lottie/confetti.json')}
@@ -74,13 +67,12 @@ export default function winner() {
         ref={animation}
         style={{
           alignSelf: 'center',
-          width: WIDHT + 100,
+          width: WIDTH + 100,
         }}
         source={require('@/assets/lottie/trophy3.json')}
       />
     )
   }
-
 
   return (
     <Stack f={1} px={20} pt={top} bg={colors.background} ai={'center'} jc={'center'}>
