@@ -21,9 +21,11 @@ export default function index() {
   const modalDonate = useRef<ModalProps>(null)
   const adUnitId = getAdUnitId('home_Intersticial');
 
-  const { isLoaded, load, show } = useInterstitialAd(adUnitId, { 
+  const { isLoaded, load, show, error } = useInterstitialAd(adUnitId, { 
     requestNonPersonalizedAdsOnly: true,
   });
+
+  console.log(error);
 
   useEffect(() => {
     load();

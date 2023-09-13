@@ -1,5 +1,6 @@
 import { useToast as useToastNotifications, ToastOptions } from 'react-native-toast-notifications';
 import { colors } from '@/styles/theme';
+import { Platform } from 'react-native';
 
 type ToastProps = {
   message: string | JSX.Element;
@@ -17,6 +18,7 @@ const useToast = (): { showToast: (props: ToastProps) => void } => {
       placement: "top",
       dangerColor: colors.attention,
       style: {
+        marginTop: Platform.OS === "android" ? 30 : 20,
         borderRadius: 50,
         paddingHorizontal: 30,
         paddingVertical: 20,

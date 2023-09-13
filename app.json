@@ -28,7 +28,14 @@
       "bundleIdentifier": "com.bruno.truco",
       "buildNumber": "2.0.1"
     },
+    "androidStatusBar": {
+      "translucent": true
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#171719"
+    },
     "android": {
+      "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#2666DE"
