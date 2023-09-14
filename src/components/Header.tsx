@@ -7,7 +7,7 @@ import { Settings } from '@tamagui/lucide-icons'
 import { Button } from './ui/Button'
 
 type Props = StackProps & {
-  onPress?: () => void
+  settingsOnPress?: () => void
 }
 
 export default function Header(props: Props) {
@@ -15,44 +15,31 @@ export default function Header(props: Props) {
 
   return (
     <XStack
-      pt={top + 15}
+      pt={top + 10}
       pb={10}
       px={20}
       bg={colors.secondary}
       ai={'center'}
       jc={'flex-end'}
-      mb={20}
       {...props}
     >
-      <Stack
-        w={50}
-        h={50}
-        bg={colors.transparent}
-      />
-      <Text
-        f={1}
-        textAlign={'center'}
-        fontSize={'$h3'}
-        fontFamily={'$semibold'}
-      >
+      <Stack w={50} h={50} />
+      <Text f={1} h3 semibold center>
         Contador de truco
       </Text>
       <Button
-        onPress={props.onPress}
-        bg={colors.transparent}
-        pressStyle={{
-          scale: 0.97,
-          bg: colors.transparent,
-        }}
         w={50}
         h={50}
         ai={'center'}
         jc={'center'}
+        bg={colors.transparent}
+        onPress={props.settingsOnPress}
+        pressStyle={{
+          scale: 0.97,
+          bg: colors.transparent,
+        }}
       >
-        <Settings
-          size={23}
-          color={colors.gray}
-        />
+        <Settings size={23} color={colors.gray} />
       </Button>
     </XStack>
   )

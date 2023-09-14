@@ -1,4 +1,4 @@
-import { Slot, SplashScreen, Stack } from 'expo-router'
+import { SplashScreen, Stack } from 'expo-router'
 import FontProvider from '@/providers/fontProvider'
 import { TamaguiProvider } from 'tamagui'
 import { ToastProvider } from 'react-native-toast-notifications'
@@ -20,7 +20,7 @@ export default function Layout() {
   return <RootLayout />
 }
 
-function RootLayout() {  
+function RootLayout() {
   return (
     <TamaguiProvider config={config}>
       <ToastProvider>

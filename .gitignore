@@ -50,3 +50,4 @@ expo-env.d.ts
 
 # Outros arquivos e diretórios que você pode querer ignorar
 pc-api-*.json
+upTamagui.sh
