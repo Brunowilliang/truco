@@ -7,10 +7,24 @@ export const Button = styled(TButton, {
   fontSize: '$h3',
   animation: 'lazy',
   borderWidth: 0,
+  alignItems: 'center',
+  justifyContent: 'center',
   bg: colors.primary,
   color: colors.white,
   pressStyle: {
     scale: 0.98,
     bg: colors.primaryOpacity,
+  },
+
+  variants: {
+    secondary: {
+      true: {
+        bg: colors.secondary,
+        color: colors.white,
+        pressStyle: {
+          bg: colors.secondary,
+        },
+      },
+    },
   },
 })

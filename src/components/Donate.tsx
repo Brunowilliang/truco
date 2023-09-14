@@ -64,10 +64,15 @@ export default function Donate() {
           <Copy size={23} color={colors.gray} />
         </Button>
       </XStack>
-      <Text h3 semibold center>
-        Basta copiar a chave pix acima ou escanear o QR Code e fazer sua doação.
-        Obrigado pela apoio!
-      </Text>
+      <Stack gap={10}>
+        <Text h4 center>
+          Basta copiar a chave pix acima ou escanear o QR Code e fazer sua
+          doação.
+        </Text>
+        <Text h4 center>
+          Obrigado pela apoio!
+        </Text>
+      </Stack>
     </Stack>
   )
 }

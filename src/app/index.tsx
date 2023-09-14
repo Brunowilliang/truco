@@ -58,7 +58,7 @@ export default function index() {
 
       <Modal
         ref={modal}
-        snapPoints={['40%']}
+        snapPoints={['67%']}
         title="Sobre o jogo"
         rightComponent={<Text h6>v.2.0.2</Text>}
       >

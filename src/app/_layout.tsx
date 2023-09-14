@@ -25,7 +25,13 @@ function RootLayout() {
     <TamaguiProvider config={config}>
       <ToastProvider>
         <BottomSheetModalProvider>
-          <Stack screenOptions={{ animation: 'fade', headerShown: false }} />
+          <Stack
+            screenOptions={{
+              animation: 'fade',
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
         </BottomSheetModalProvider>
       </ToastProvider>
     </TamaguiProvider>
