@@ -48,78 +48,75 @@ interface ModalTesteProps {
   title?: string
   leftComponent?: ReactNode
   rightComponent?: ReactNode
-  snapPoints?: string[];
+  snapPoints?: string[]
 }
 
-const Modal = forwardRef<ModalProps, ModalTesteProps>(
-  (props, ref) => {
-    const { top, bottom } = useSafeAreaInsets()
-    const bottomSheetModalRef = useRef<BottomSheetModal | null>(null)
+const Modal = forwardRef<ModalProps, ModalTesteProps>((props, ref) => {
+  const { top, bottom } = useSafeAreaInsets()
+  const bottomSheetModalRef = useRef<BottomSheetModal | null>(null)
 
-    // expose methods to parent components
-    useImperativeHandle(ref, () => ({
-      open: () => {
-        bottomSheetModalRef.current?.present()
-      },
-      close: () => {
-        bottomSheetModalRef.current?.dismiss()
-      },
-    }))
+  // expose methods to parent components
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      bottomSheetModalRef.current?.present()
+    },
+    close: () => {
+      bottomSheetModalRef.current?.dismiss()
+    },
+  }))
 
-    const calculatedSnapPoints = useMemo(() => {
-      return props.snapPoints || ['70%', '100%'];
-    }, [props.snapPoints]);
+  const calculatedSnapPoints = useMemo(() => {
+    return props.snapPoints || ['70%', '100%']
+  }, [props.snapPoints])
 
-
-    // renders
-    return (
-      <BottomSheetModal
-        topInset={top + 10}
-        ref={bottomSheetModalRef}
-        index={0}
-        snapPoints={calculatedSnapPoints}
-        backdropComponent={CustomBackdrop}
-        handleIndicatorStyle={{
-          backgroundColor: colors.gray,
-          width: 40,
-        }}
-        backgroundStyle={{
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
-          backgroundColor: colors.background,
+  // renders
+  return (
+    <BottomSheetModal
+      topInset={top + 10}
+      ref={bottomSheetModalRef}
+      index={0}
+      snapPoints={calculatedSnapPoints}
+      backdropComponent={CustomBackdrop}
+      handleIndicatorStyle={{
+        backgroundColor: colors.gray,
+        width: 40,
+      }}
+      backgroundStyle={{
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 25,
+        backgroundColor: colors.background,
+      }}
+    >
+      <BottomSheetScrollView
+        stickyHeaderIndices={[0]}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          paddingBottom: bottom + 40,
         }}
       >
-        <BottomSheetScrollView
-          stickyHeaderIndices={[0]}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom: bottom + 40,
-          }}
+        <XStack
+          display={props.title ? 'flex' : 'none'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          bg={colors.background}
+          py={20}
+          px={20}
         >
-          <XStack
-            display={props.title ? 'flex' : 'none'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            bg={colors.background}
-            py={20}
-            px={20}
-          >
-            <Stack w={'20%'} alignItems={'flex-start'}>
-              {props.leftComponent}
-            </Stack>
-            <Text textAlign={'center'} fontSize={'$h3'} fontFamily={'$semibold'}>
-              {props.title}
-            </Text>
-            <Stack w={'20%'} alignItems={'flex-end'}>
-              {props.rightComponent}
-            </Stack>
-          </XStack>
-          {props.children}
-        </BottomSheetScrollView>
-      </BottomSheetModal>
-    )
-  },
-)
+          <Stack w={'20%'} alignItems={'flex-start'}>
+            {props.leftComponent}
+          </Stack>
+          <Text h3 semibold center>
+            {props.title}
+          </Text>
+          <Stack w={'20%'} alignItems={'flex-end'}>
+            {props.rightComponent}
+          </Stack>
+        </XStack>
+        {props.children}
+      </BottomSheetScrollView>
+    </BottomSheetModal>
+  )
+})
 
 const styles = StyleSheet.create({
   container: {

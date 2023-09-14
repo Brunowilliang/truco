@@ -10,9 +10,9 @@ export default function NotFoundPage() {
 
   return (
     <Stack f={1} ai={'center'} jc={'center'} bg={colors.background}>
-      <Text fontFamily={'$semibold'}>Ooops!</Text>
-      <Text fontFamily={'$semibold'}>página não encontrada!</Text>
-      <Button onPress={() => router.push('/')} mt={20}>
+      <Text semibold>Ooops!</Text>
+      <Text semibold>página não encontrada!</Text>
+      <Button mt={20} onPress={() => router.push('/')}>
         Voltar
       </Button>
     </Stack>

@@ -4,8 +4,11 @@
   ],
   "rules": {
     "camelcase": "off",
+    "quotes": ["error", "single"],
     "react-hooks/rules-of-hooks": "off",
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/display-name": "off"
   }
 }

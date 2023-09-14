@@ -20,7 +20,7 @@ export default function FontProvider() {
   useEffect(() => {
     if (loaded) {
       setTimeout(() => {
-      SplashScreen.hideAsync()
+        SplashScreen.hideAsync()
       }, 500)
     }
   }, [loaded])

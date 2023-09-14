@@ -3,7 +3,8 @@
     "name": "Contador de Truco",
     "slug": "contador-de-truco",
     "description": "Contador de Truco",
-    "version": "2.0.1",
+    "version": "2.0.2",
+    "userInterfaceStyle": "dark",
     "platforms": [
       "ios",
       "android"
