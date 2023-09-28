@@ -7,8 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
-import { useScoreStore } from '@/store/useScoreStore'
-import { colors } from '@/styles/theme'
 import { useInterstitialAd } from 'react-native-google-mobile-ads'
 import { getAdUnitId } from '@/utils/adConfig'
 
@@ -18,7 +16,6 @@ const HEIGHT = Dimensions.get('window').height
 export default function Winner() {
   const router = useRouter()
   const params = useGlobalSearchParams<{ name: string }>()
-  const { setFinishedGame } = useScoreStore()
   const { top } = useSafeAreaInsets()
   const adUnitId = getAdUnitId('winner_Intersticial')
   const animation = useRef(null)
@@ -34,7 +31,6 @@ export default function Winner() {
     if (isLoaded) {
       show()
     }
-    setFinishedGame(true)
     router.push({
       pathname: '/',
     })
@@ -79,7 +75,7 @@ export default function Winner() {
       f={1}
       px={20}
       pt={top}
-      bg={colors.background}
+      bg={'$background'}
       ai={'center'}
       jc={'center'}
     >
@@ -91,14 +87,8 @@ export default function Winner() {
         {params.name}
       </Text>
       <Trophy />
-      <Button
-        width={'100%'}
-        onPress={resetGame}
-        mt={20}
-        bg={colors.primary}
-        borderRadius={10}
-      >
-        Reiniciar Jogo
+      <Button width={'100%'} onPress={resetGame} borderRadius={10}>
+        Novo Jogo
       </Button>
     </Stack>
   )

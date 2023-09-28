@@ -1,6 +1,6 @@
-import { colors } from '@/styles/theme'
 import { Input as TInput, styled } from 'tamagui'
 
+// @ts-ignore
 export const Input = styled(TInput, {
   px: 0,
   py: 0,
@@ -11,14 +11,14 @@ export const Input = styled(TInput, {
   verticalAlign: 'middle',
   fontFamily: '$medium',
   fontSize: '$h4',
-  borderColor: colors.secondary,
+  borderColor: '$contrast',
   borderRadius: 8,
   borderWidth: 0.5,
-  color: colors.gray,
-  placeholderTextColor: colors.gray,
-  bg: colors.secondary,
+  color: '$textColor',
+  placeholderTextColor: '$textColor',
+  bg: '$contrast',
   focusStyle: {
     borderWidth: 0.5,
-    borderColor: colors.gray,
+    borderColor: '$textColor',
   },
 })

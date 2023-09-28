@@ -1,25 +1,23 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollView, XStack } from 'tamagui'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { colors } from '@/styles/theme'
 import Counter from '@/components/Counter'
 import { Separator } from '@/components/ui/Separator'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
-import { useScoreStore } from '@/store/useScoreStore'
-import Modal, { ModalProps } from '@/components/ui/Modal'
-import { Text } from '@/components/ui/Text'
+import { Sheet } from '@/components/ui/Sheet'
 import About from '@/components/About'
-import Donate from '@/components/Donate'
 import { useInterstitialAd } from 'react-native-google-mobile-ads'
 import { getAdUnitId } from '@/utils/adConfig'
+import Menu from '@/components/Menu'
+import { GameProps, useGameStore } from '@/store/useGame'
 
 export default function index() {
   const { bottom } = useSafeAreaInsets()
-  const { finishedGame, setFinishedGame } = useScoreStore()
-  const modal = useRef<ModalProps>(null)
-  const modalDonate = useRef<ModalProps>(null)
   const adUnitId = getAdUnitId('home_Intersticial')
+
+  const [openModalMenu, setOpenModalMenu] = useState(false)
+  const [openModalAbout, setOpenModalAbout] = useState(false)
 
   const { isLoaded, load, show } = useInterstitialAd(adUnitId, {
     requestNonPersonalizedAdsOnly: true,
@@ -35,39 +33,79 @@ export default function index() {
     }
   }, [isLoaded, show])
 
-  useEffect(() => {
-    setFinishedGame(false)
-  }, [finishedGame])
+  const { teamA, teamB, scoreA, scoreB, addGame } = useGameStore()
+
+  const handleGameEnd = (team: string) => {
+    const game: GameProps = {
+      teamA: teamA || 'Time A',
+      teamB: teamB || 'Time B',
+      scoreA,
+      scoreB,
+      winner: team,
+    }
+    addGame(game)
+  }
 
   return (
     <>
-      <Header settingsOnPress={() => modal.current?.open()} />
+      <Header
+        title="Contador de truco"
+        settingsOnPress={() => setOpenModalMenu(true)}
+      />
       <ScrollView
         contentContainerStyle={{ flex: 1 }}
         pt={20}
         pb={bottom}
-        bg={colors.background}
+        bg={'$background'}
       >
-        <XStack f={1} px={20} bg={colors.background} gap={10}>
-          <Counter teamName="Equipe A" />
-          <Separator />
-          <Counter teamName="Equipe B" />
+        <XStack f={1} px={20} gap={10}>
+          <Counter
+            placeholder="Team A"
+            team="A"
+            onGameEnd={() => handleGameEnd('teamA')}
+          />
+          <Separator vertical />
+          <Counter
+            placeholder="Team B"
+            team="B"
+            onGameEnd={() => handleGameEnd('teamB')}
+          />
         </XStack>
         <Footer />
       </ScrollView>
 
-      <Modal
-        ref={modal}
-        snapPoints={['40%']}
-        title="Sobre o jogo"
-        rightComponent={<Text h6>v.2.0.2</Text>}
+      <Sheet
+        open={openModalMenu}
+        onOpenChange={setOpenModalMenu}
+        animation={'modal'}
+        dismissOnSnapToBottom
+        snapPointsMode="fit"
       >
-        <About onPress={() => modalDonate.current?.open()} />
-      </Modal>
+        <Sheet.Overlay />
+        <Sheet.Frame>
+          <Sheet.Handle />
+          <Menu
+            AboutOnPress={() => {
+              setOpenModalMenu(false)
+              setOpenModalAbout(true)
+            }}
+          />
+        </Sheet.Frame>
+      </Sheet>
 
-      <Modal ref={modalDonate} snapPoints={['73%']} title="Doação">
-        <Donate />
-      </Modal>
+      <Sheet
+        open={openModalAbout}
+        onOpenChange={setOpenModalAbout}
+        animation={'modal'}
+        dismissOnSnapToBottom
+        snapPointsMode="fit"
+      >
+        <Sheet.Overlay />
+        <Sheet.Frame>
+          <Sheet.Handle />
+          <About />
+        </Sheet.Frame>
+      </Sheet>
     </>
   )
 }
