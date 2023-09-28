@@ -78,7 +78,7 @@ const Modal = forwardRef<ModalProps, ModalTesteProps>((props, ref) => {
       snapPoints={calculatedSnapPoints}
       backdropComponent={CustomBackdrop}
       handleIndicatorStyle={{
-        backgroundColor: colors.gray,
+        backgroundColor: colors.white,
         width: 40,
       }}
       backgroundStyle={{
@@ -98,7 +98,7 @@ const Modal = forwardRef<ModalProps, ModalTesteProps>((props, ref) => {
           display={props.title ? 'flex' : 'none'}
           justifyContent={'space-between'}
           alignItems={'center'}
-          bg={colors.background}
+          bg={'$background'}
           py={20}
           px={20}
         >

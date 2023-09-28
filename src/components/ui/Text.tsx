@@ -1,10 +1,10 @@
-import { colors } from '@/styles/theme'
 import { Text as TText, styled } from 'tamagui'
 
+// @ts-ignore
 export const Text = styled(TText, {
   fontFamily: '$medium',
   fontSize: '$h4',
-  color: colors.gray,
+  color: '$textColor',
 
   variants: {
     bold: {

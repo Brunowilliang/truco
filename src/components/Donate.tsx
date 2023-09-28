@@ -6,9 +6,11 @@ import { Text } from './ui/Text'
 import { Button } from './ui/Button'
 import { Copy } from '@tamagui/lucide-icons'
 import * as Clipboard from 'expo-clipboard'
-import useToast from './ui/Toast'
+import { useToast } from './ui/Toast'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export default function Donate() {
+  const { bottom } = useSafeAreaInsets()
   const { showToast } = useToast()
   const chavePix =
     '00020101021126570014br.gov.bcb.pix0111376427498050220Obrigado pelo apoio 5204000053039865802BR5920Bruno Willian Garcia6009SAO PAULO622905251GCG3CTTMBXY6BTB27XDE804863045B25'
@@ -19,7 +21,7 @@ export default function Donate() {
   }
 
   return (
-    <Stack gap={30} px={20}>
+    <Stack gap={30} px={20} pt={20} pb={bottom + 20}>
       <Image
         source={require('@/assets/qrcode.jpeg')}
         alt="QR Code"

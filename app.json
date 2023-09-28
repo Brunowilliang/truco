@@ -3,7 +3,7 @@
     "name": "Contador de Truco",
     "slug": "contador-de-truco",
     "description": "Contador de Truco",
-    "version": "2.0.2",
+    "version": "3.0.0",
     "userInterfaceStyle": "dark",
     "platforms": [
       "ios",
@@ -27,7 +27,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.bruno.truco",
-      "buildNumber": "2.0.4"
+      "buildNumber": "3.0.0"
     },
     "androidStatusBar": {
       "translucent": true
@@ -42,7 +42,7 @@
         "backgroundColor": "#2666DE"
       },
       "package": "com.bruno.truco",
-      "versionCode": 9
+      "versionCode": 11
     },
     "plugins": [
       "expo-router",

@@ -1,6 +1,6 @@
-import { colors } from '@/styles/theme'
 import { Button as TButton, styled } from 'tamagui'
 
+// @ts-ignore
 export const Button = styled(TButton, {
   size: 60,
   fontFamily: '$semibold',
@@ -9,20 +9,28 @@ export const Button = styled(TButton, {
   borderWidth: 0,
   alignItems: 'center',
   justifyContent: 'center',
-  bg: colors.primary,
-  color: colors.white,
+  bg: '$blue',
+  color: '$buttonColor',
   pressStyle: {
     scale: 0.98,
-    bg: colors.primaryOpacity,
+    opacity: 0.8,
   },
 
   variants: {
     secondary: {
       true: {
-        bg: colors.secondary,
-        color: colors.white,
+        bg: '$contrast',
+        color: '$textColor',
         pressStyle: {
-          bg: colors.secondary,
+          bg: '$contrast',
+          opacity: 0.8,
+        },
+      },
+    },
+    noScale: {
+      true: {
+        pressStyle: {
+          scale: 1,
         },
       },
     },

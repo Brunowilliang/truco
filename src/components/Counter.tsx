@@ -1,77 +1,116 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { XStack, YStack } from 'tamagui'
 import { Input } from './ui/Input'
 import { Text } from './ui/Text'
 import { Button } from './ui/Button'
 import { useRouter } from 'expo-router'
-import useToast from './ui/Toast'
-import { useScoreStore } from '@/store/useScoreStore'
+import { useToast } from './ui/Toast'
+import { useGameStore } from '@/store/useGame'
 
 type Props = {
-  teamName: string
+  placeholder: string
+  team: 'A' | 'B'
+  onGameEnd: (team: string) => void
 }
 
-export default function Counter({ teamName }: Props) {
+const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
+  const { teamA, teamB, scoreA, scoreB, resetInputsAndScores } = useGameStore()
+
   const { showToast } = useToast()
-  const { finishedGame } = useScoreStore()
-  const [count, setCount] = useState(0)
-  const [name, setName] = useState('')
-  const [result, setResult] = useState(0)
-  const [, setError] = useState(false)
   const router = useRouter()
 
-  const validateNome = (): boolean => {
-    if (name === '') {
-      setError(true)
+  const validateTeamName = useCallback((): boolean => {
+    if ((team === 'A' && teamA === '') || (team === 'B' && teamB === '')) {
       showToast({
-        message: `Preencha o nome da ${teamName}!`,
-        type: 'danger',
+        message: `Preencha o nome da ${placeholder}!`,
+        type: 'error',
       })
       return false
     }
-    setError(false)
     return true
-  }
+  }, [team, teamA, teamB, placeholder])
 
-  const updateCount = (value: number) => {
-    if (!validateNome()) return
-    setCount((prevCount) => prevCount + value)
-  }
-
-  useEffect(() => {
-    if (finishedGame) {
-      setCount(0)
-      setResult(count)
-      setName('')
-    } else {
-      if (count >= 12) {
-        setCount(12)
-        router.push({
-          pathname: '/winner',
-          params: { name },
+  const updateCount = useCallback(
+    (value: number) => {
+      if (!validateTeamName()) return
+      if (team === 'A') {
+        useGameStore.setState((state) => {
+          const newScore = state.scoreA + value
+          return { scoreA: Math.min(Math.max(0, newScore), 12) } // Garante que a pontuação esteja entre 0 e 12
+        })
+      } else {
+        useGameStore.setState((state) => {
+          const newScore = state.scoreB + value
+          return { scoreB: Math.min(Math.max(0, newScore), 12) } // Garante que a pontuação esteja entre 0 e 12
         })
       }
-      if (count < 0) {
-        setCount(0)
-      }
-      setResult(count)
-    }
+    },
+    [validateTeamName, team],
+  )
 
-    if (name !== '') {
-      setError(false)
+  const resetScore = useCallback(() => {
+    if (!validateTeamName()) return
+    if (team === 'A') {
+      useGameStore.setState({ scoreA: 0 })
+    } else {
+      useGameStore.setState({ scoreB: 0 })
     }
-  }, [finishedGame, count, name])
+  }, [team, validateTeamName])
+
+  useEffect(() => {
+    const currentScore = team === 'A' ? scoreA : scoreB
+    if (currentScore >= 12) {
+      onGameEnd(team)
+      router.push({
+        pathname: '/winner',
+        params: { name: team === 'A' ? teamA : teamB },
+      })
+      resetInputsAndScores()
+    }
+  }, [team, scoreA, scoreB, onGameEnd, router, resetInputsAndScores])
+
+  const handleNameChange = (text: string) => {
+    if (team === 'A') {
+      useGameStore.setState({ teamA: text })
+    } else {
+      useGameStore.setState({ teamB: text })
+    }
+  }
+
+  const [lastScore, setLastScore] = useState(team === 'A' ? scoreA : scoreB)
+
+  useEffect(() => {
+    setLastScore(team === 'A' ? scoreA : scoreB)
+  }, [team, scoreA, scoreB])
+
+  const currentScore = team === 'A' ? scoreA : scoreB
+  const isIncreasing = currentScore > lastScore
 
   return (
     <YStack f={1} gap={10}>
       <Input
-        placeholder={teamName}
+        placeholder={placeholder}
         textAlign="center"
-        value={name}
-        onChangeText={setName}
+        value={team === 'A' ? teamA : teamB}
+        onChangeText={handleNameChange}
       />
-      <Text fontSize={50} bold center my={10}>
-        {result}
+      <Text
+        fontSize={50}
+        bold
+        center
+        my={10}
+        key={currentScore}
+        animation={'typing'}
+        enterStyle={{
+          opacity: 0,
+          y: isIncreasing ? 30 : -30,
+        }}
+        exitStyle={{
+          opacity: 0,
+          y: isIncreasing ? -30 : 30,
+        }}
+      >
+        {team === 'A' ? scoreA : scoreB}
       </Text>
       <XStack gap={10}>
         <Button f={1} onPress={() => updateCount(-3)}>
@@ -93,7 +132,7 @@ export default function Counter({ teamName }: Props) {
         <Button
           f={1}
           onPress={() => {
-            validateNome() && setCount(0)
+            validateTeamName() && resetScore()
           }}
         >
           Resetar
@@ -102,3 +141,5 @@ export default function Counter({ teamName }: Props) {
     </YStack>
   )
 }
+
+export default Counter

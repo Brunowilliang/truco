@@ -1,43 +1,26 @@
-import {
-  useToast as useToastNotifications,
-  ToastOptions,
-} from 'react-native-toast-notifications'
-import { colors } from '@/styles/theme'
-import { Platform } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
 
-type ToastProps = {
-  message: string | JSX.Element
-  type?: 'normal' | 'success' | 'danger' | 'warning' | string
-  options?: Omit<ToastOptions, 'type'> // Usamos Omit para excluir a propriedade 'type' das opções, já que estamos passando ela separadamente
+type ToastType = 'info' | 'success' | 'error'
+
+interface ShowToastOptions {
+  message: string
+  type?: ToastType
 }
 
-const useToast = (): { showToast: (props: ToastProps) => void } => {
-  const toast = useToastNotifications()
-
-  const showToast = ({ message, type = 'normal', options }: ToastProps) => {
-    toast.show(message, {
+export const useToast = () => {
+  const { top } = useSafeAreaInsets()
+  const showToast = ({ message, type = 'info' }: ShowToastOptions) => {
+    console.log('open')
+    Toast.show({
       type,
-      animationDuration: 300,
-      placement: 'top',
-      dangerColor: colors.attention,
-      style: {
-        marginTop: Platform.OS === 'android' ? 30 : 20,
-        borderRadius: 50,
-        paddingHorizontal: 30,
-        paddingVertical: 20,
-      },
-      textStyle: {
-        fontFamily: 'MontserratSemiBold',
-        color: colors.white,
-        fontSize: 15,
-      },
-      duration: 2000,
-      animationType: 'zoom-in',
-      ...options, // Isso permite que você substitua as configurações predefinidas, se necessário
+      text1: message,
+      position: 'top',
+      visibilityTime: 3000,
+      autoHide: true,
+      topOffset: top + 10,
     })
   }
 
   return { showToast }
 }
-
-export default useToast
