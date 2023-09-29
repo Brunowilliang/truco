@@ -22,7 +22,7 @@ export type Store = {
   addGame: (game: GameProps) => void
   deleteAllGames: () => void
   resetScores: () => void
-  resetInputsAndScores: () => void
+  resetInputs: () => void
 }
 
 export const useGameStore = create<Store>(
@@ -37,13 +37,15 @@ export const useGameStore = create<Store>(
         set((state: Store) => ({
           games: [
             ...state.games,
-            { ...game, createdAt: new Date().toISOString() },
+            {
+              ...game,
+              createdAt: new Date().toISOString(),
+            },
           ],
         })),
       deleteAllGames: () => set({ games: [] }),
       resetScores: () => set({ scoreA: 0, scoreB: 0 }),
-      resetInputsAndScores: () =>
-        set({ teamA: '', teamB: '', scoreA: 0, scoreB: 0 }),
+      resetInputs: () => set({ teamA: '', teamB: '' }),
     }),
     {
       name: 'game-storage',

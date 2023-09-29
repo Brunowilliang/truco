@@ -11,7 +11,6 @@ interface ShowToastOptions {
 export const useToast = () => {
   const { top } = useSafeAreaInsets()
   const showToast = ({ message, type = 'info' }: ShowToastOptions) => {
-    console.log('open')
     Toast.show({
       type,
       text1: message,

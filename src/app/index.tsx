@@ -10,7 +10,7 @@ import About from '@/components/About'
 import { useInterstitialAd } from 'react-native-google-mobile-ads'
 import { getAdUnitId } from '@/utils/adConfig'
 import Menu from '@/components/Menu'
-import { GameProps, useGameStore } from '@/store/useGame'
+import { GameProps, useGameStore } from '@/store/useGameStore'
 
 export default function index() {
   const { bottom } = useSafeAreaInsets()

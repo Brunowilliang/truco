@@ -14,22 +14,29 @@ export default function HistoryCard({ team, score, winnerA, winnerB }: Props) {
   return (
     <XStack f={1} p={10} ai={'center'} jc={'center'} position="relative">
       <Stack
-        w={40}
+        p={8}
+        borderRadius={10}
+        borderTopLeftRadius={winnerA ? 0 : 10}
+        borderTopRightRadius={winnerB ? 0 : 10}
+        borderBottomRightRadius={winnerA ? 0 : 10}
+        borderBottomLeftRadius={winnerB ? 0 : 10}
         ai={'center'}
         jc={'center'}
+        bg={winnerA || winnerB ? '$blue' : '$textColor'}
         position="absolute"
         display={winnerA || winnerB ? 'flex' : 'none'}
-        left={winnerA ? 5 : null}
-        right={winnerB ? 5 : null}
-        bottom={10}
+        left={winnerA ? 0 : null}
+        zIndex={10}
+        right={winnerB ? 0 : null}
+        bottom={0}
       >
-        <Trophy size={25} color={winnerA || winnerB ? '$blue' : '$textColor'} />
+        <Trophy size={20} color={'white'} />
       </Stack>
       <Stack f={1} ai={'center'} jc={'center'}>
         <Text
           h4
           semibold
-          numberOfLines={2}
+          numberOfLines={1}
           color={winnerA || winnerB ? '$blue' : '$textColor'}
         >
           {team}
@@ -42,7 +49,6 @@ export default function HistoryCard({ team, score, winnerA, winnerB }: Props) {
           {score}
         </Text>
       </Stack>
-      {/* winnerB desse lado */}
     </XStack>
   )
 }

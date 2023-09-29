@@ -1,73 +1,110 @@
 import React from 'react'
 import { Button } from '@/components/ui/Button'
-import { ScrollView, Stack, XStack } from 'tamagui'
+import { Stack } from 'tamagui'
 import { Text } from '@/components/ui/Text'
-import { useGameStore } from '@/store/useGame'
+import { Game, useGameStore } from '@/store/useGameStore'
 import { X } from '@tamagui/lucide-icons'
 import Header from '@/components/Header'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import HistoryCard from '@/components/HistoryCard'
+import moment from 'moment'
+import { SectionList } from 'react-native'
+
+type Section = {
+  title: string
+  data: Game[]
+}
+
+function groupGamesByDate(games: Game[]): Section[] {
+  const grouped: Record<string, Game[]> = games.reduce(
+    (acc: Record<string, Game[]>, game) => {
+      const date = moment(game.createdAt).format('DD/MM/YYYY')
+      acc[date] = acc[date] || []
+      acc[date].push(game)
+      return acc
+    },
+    {},
+  )
+
+  return Object.keys(grouped)
+    .map((date) => ({
+      title: date,
+      data: grouped[date].sort(
+        (a, b) => moment(b.createdAt).unix() - moment(a.createdAt).unix(),
+      ),
+    }))
+    .sort(
+      (a, b) =>
+        moment(b.title, 'DD/MM/YYYY').unix() -
+        moment(a.title, 'DD/MM/YYYY').unix(),
+    )
+}
 
 export default function MatchHistory() {
   const { bottom } = useSafeAreaInsets()
   const { games, deleteAllGames } = useGameStore()
 
-  const sortedGames = games.slice().sort((a, b) => {
-    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  })
+  const groupedGames = React.useMemo(() => groupGamesByDate(games), [games])
 
-  console.log(JSON.stringify(games, null, 2))
+  const renderItem = ({ item }: { item: Game }) => (
+    <Stack
+      ai={'center'}
+      jc={'center'}
+      borderRadius={10}
+      zIndex={1}
+      bg={'$contrast'}
+      flexDirection="row"
+    >
+      <HistoryCard
+        winnerA={item.winner === 'teamA'}
+        team={item.teamA}
+        score={item.scoreA}
+      />
+      <X size={35} color="$textColor" />
+      <HistoryCard
+        winnerB={item.winner === 'teamB'}
+        team={item.teamB}
+        score={item.scoreB}
+      />
+    </Stack>
+  )
+
+  const renderSectionHeader = ({
+    section: { title },
+  }: {
+    section: Section
+  }) => (
+    <Text pt={20} mb={10} bg={'$background'}>
+      {moment(title, 'DD/MM/YYYY').format('DD, MMM [de] YYYY')}
+    </Text>
+  )
 
   return (
     <>
       <Header goBack title="Últimas partidas" />
       <Stack f={1} bg={'$background'} pb={bottom + 20} px={20}>
-        <ScrollView
-          f={1}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            gap: 10,
-            paddingVertical: 20,
-          }}
-        >
-          {sortedGames.map((match, index) => {
-            return (
-              <XStack
-                key={index}
-                ai={'center'}
-                jc={'center'}
-                borderRadius={10}
-                bg={'$contrast'}
-              >
-                <HistoryCard
-                  winnerA={match.winner === 'teamA'}
-                  team={match.teamA}
-                  score={match.scoreA}
-                />
-
-                <Stack>
-                  <X size={35} color="$textColor" />
-                </Stack>
-
-                <HistoryCard
-                  winnerB={match.winner === 'teamB'}
-                  team={match.teamB}
-                  score={match.scoreB}
-                />
-              </XStack>
-            )
-          })}
-          {sortedGames.length === 0 && (
-            <Text center h4 medium mt={10}>
-              Nenhuma partida jogada
+        <SectionList
+          sections={groupedGames}
+          stickySectionHeadersEnabled={false}
+          style={{ flex: 1 }}
+          contentContainerStyle={{ paddingBottom: 20 }}
+          ItemSeparatorComponent={() => <Stack h={10} />}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
+          ListEmptyComponent={() => (
+            <Text center mt={20}>
+              Nenhuma partida encontrada
             </Text>
           )}
-        </ScrollView>
-        {sortedGames.length > 0 && (
-          <Button secondary onPress={deleteAllGames}>
-            Apagar todas as partidas
-          </Button>
-        )}
+          renderSectionHeader={renderSectionHeader}
+          showsVerticalScrollIndicator={false}
+        />
+        {groupedGames.length > 0 &&
+          groupedGames.some((section) => section.data.length > 0) && (
+            <Button secondary onPress={deleteAllGames}>
+              Apagar todas as partidas
+            </Button>
+          )}
       </Stack>
     </>
   )
