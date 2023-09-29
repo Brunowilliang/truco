@@ -27,6 +27,13 @@ export const animations = createAnimations({
     mass: 0.9,
     stiffness: 0,
   },
+  theme: {
+    type: 'timing',
+    duration: 500,
+    damping: 1,
+    mass: 1,
+    stiffness: 100,
+  },
   quick: {
     type: 'spring',
     damping: 20,

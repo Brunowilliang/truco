@@ -5,7 +5,7 @@ import { Text } from './ui/Text'
 import { Button } from './ui/Button'
 import { useRouter } from 'expo-router'
 import { useToast } from './ui/Toast'
-import { useGameStore } from '@/store/useGame'
+import { useGameStore } from '@/store/useGameStore'
 
 type Props = {
   placeholder: string
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
-  const { teamA, teamB, scoreA, scoreB, resetInputsAndScores } = useGameStore()
+  const { teamA, teamB, scoreA, scoreB, resetScores } = useGameStore()
 
   const { showToast } = useToast()
   const router = useRouter()
@@ -36,12 +36,12 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
       if (team === 'A') {
         useGameStore.setState((state) => {
           const newScore = state.scoreA + value
-          return { scoreA: Math.min(Math.max(0, newScore), 12) } // Garante que a pontuação esteja entre 0 e 12
+          return { scoreA: Math.min(Math.max(0, newScore), 12) }
         })
       } else {
         useGameStore.setState((state) => {
           const newScore = state.scoreB + value
-          return { scoreB: Math.min(Math.max(0, newScore), 12) } // Garante que a pontuação esteja entre 0 e 12
+          return { scoreB: Math.min(Math.max(0, newScore), 12) }
         })
       }
     },
@@ -65,9 +65,9 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
         pathname: '/winner',
         params: { name: team === 'A' ? teamA : teamB },
       })
-      resetInputsAndScores()
+      resetScores()
     }
-  }, [team, scoreA, scoreB, onGameEnd, router, resetInputsAndScores])
+  }, [team, scoreA, scoreB, onGameEnd, router, resetScores])
 
   const handleNameChange = (text: string) => {
     if (team === 'A') {

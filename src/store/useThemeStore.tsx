@@ -10,7 +10,7 @@ type ThemeState = {
 const useThemeStore = create<ThemeState>(
   persist(
     (set) => ({
-      theme: 'light',
+      theme: 'dark',
       toggleTheme: () =>
         set((state: ThemeState) => ({
           theme: state.theme === 'light' ? 'dark' : 'light',

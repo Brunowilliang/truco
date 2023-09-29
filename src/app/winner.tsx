@@ -9,6 +9,7 @@ import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import { useInterstitialAd } from 'react-native-google-mobile-ads'
 import { getAdUnitId } from '@/utils/adConfig'
+import { useGameStore } from '@/store/useGameStore'
 
 const WIDTH = Dimensions.get('window').width
 const HEIGHT = Dimensions.get('window').height
@@ -23,14 +24,28 @@ export default function Winner() {
     requestNonPersonalizedAdsOnly: true,
   })
 
+  const { resetInputs, resetScores } = useGameStore()
+
   useEffect(() => {
     load()
   }, [load])
+
+  const resetGameAndInput = () => {
+    if (isLoaded) {
+      show()
+    }
+    resetInputs()
+    resetScores()
+    router.push({
+      pathname: '/',
+    })
+  }
 
   const resetGame = () => {
     if (isLoaded) {
       show()
     }
+    resetScores()
     router.push({
       pathname: '/',
     })
@@ -87,8 +102,11 @@ export default function Winner() {
         {params.name}
       </Text>
       <Trophy />
-      <Button width={'100%'} onPress={resetGame} borderRadius={10}>
+      <Button width={'100%'} mb={10} onPress={resetGame} borderRadius={10}>
         Novo Jogo
+      </Button>
+      <Button width={'100%'} onPress={resetGameAndInput} borderRadius={10}>
+        Novo Jogo e Novos Times
       </Button>
     </Stack>
   )
