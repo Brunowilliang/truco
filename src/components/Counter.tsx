@@ -114,18 +114,18 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
       </Text>
       <XStack gap={10}>
         <Button f={1} onPress={() => updateCount(-3)}>
-          -3
+          <Button.Text>-3</Button.Text>
         </Button>
         <Button f={1} onPress={() => updateCount(3)}>
-          +3
+          <Button.Text>+3</Button.Text>
         </Button>
       </XStack>
       <XStack gap={10}>
         <Button f={1} onPress={() => updateCount(-1)}>
-          -1
+          <Button.Text>-1</Button.Text>
         </Button>
         <Button f={1} onPress={() => updateCount(1)}>
-          +1
+          <Button.Text>+1</Button.Text>
         </Button>
       </XStack>
       <XStack>
@@ -135,7 +135,7 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
             validateTeamName() && resetScore()
           }}
         >
-          Resetar
+          <Button.Text>Resetar</Button.Text>
         </Button>
       </XStack>
     </YStack>

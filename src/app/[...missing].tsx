@@ -13,7 +13,7 @@ export default function NotFoundPage() {
       <Text semibold>Ooops!</Text>
       <Text semibold>página não encontrada!</Text>
       <Button mt={20} onPress={() => router.push('/')}>
-        Voltar
+        <Button.Text>Voltar</Button.Text>
       </Button>
     </Stack>
   )

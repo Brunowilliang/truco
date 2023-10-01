@@ -3,12 +3,14 @@ import { Button } from '@/components/ui/Button'
 import { Stack } from 'tamagui'
 import { Text } from '@/components/ui/Text'
 import { Game, useGameStore } from '@/store/useGameStore'
-import { X } from '@tamagui/lucide-icons'
+import { ChevronLeft, X } from '@tamagui/lucide-icons'
 import Header from '@/components/Header'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import HistoryCard from '@/components/HistoryCard'
 import moment from 'moment'
 import { SectionList } from 'react-native'
+import { IconButton } from '@/components/ui/IconButton'
+import { useRouter } from 'expo-router'
 
 type Section = {
   title: string
@@ -42,6 +44,7 @@ function groupGamesByDate(games: Game[]): Section[] {
 
 export default function MatchHistory() {
   const { bottom } = useSafeAreaInsets()
+  const router = useRouter()
   const { games, deleteAllGames } = useGameStore()
 
   const groupedGames = React.useMemo(() => groupGamesByDate(games), [games])
@@ -81,7 +84,14 @@ export default function MatchHistory() {
 
   return (
     <>
-      <Header goBack title="Últimas partidas" />
+      <Header
+        title="Últimas partidas"
+        leftChildren={
+          <IconButton left onPress={() => router.back()}>
+            <ChevronLeft size={30} color={'$textColor'} />
+          </IconButton>
+        }
+      />
       <Stack f={1} bg={'$background'} pb={bottom + 20} px={20}>
         <SectionList
           sections={groupedGames}
@@ -102,7 +112,9 @@ export default function MatchHistory() {
         {groupedGames.length > 0 &&
           groupedGames.some((section) => section.data.length > 0) && (
             <Button secondary onPress={deleteAllGames}>
-              Apagar todas as partidas
+              <Button.Text color={'$textColor'}>
+                Apagar todas as partidas
+              </Button.Text>
             </Button>
           )}
       </Stack>

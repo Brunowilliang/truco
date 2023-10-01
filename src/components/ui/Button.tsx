@@ -1,16 +1,25 @@
-import { Button as TButton, styled } from 'tamagui'
+import {
+  Stack,
+  Text,
+  createStyledContext,
+  styled,
+  withStaticProperties,
+} from 'tamagui'
+
+export const ButtonContext = createStyledContext({})
 
 // @ts-ignore
-export const Button = styled(TButton, {
-  size: 60,
-  fontFamily: '$semibold',
-  fontSize: '$h3',
+export const ButtonFrame = styled(Stack, {
+  name: 'Button',
+  context: ButtonContext,
+  height: 60,
+  width: '100%',
+  borderRadius: 10,
   animation: 'lazy',
   borderWidth: 0,
   alignItems: 'center',
   justifyContent: 'center',
   bg: '$blue',
-  color: '$buttonColor',
   pressStyle: {
     scale: 0.98,
     opacity: 0.8,
@@ -35,4 +44,17 @@ export const Button = styled(TButton, {
       },
     },
   },
+})
+
+export const ButtonText = styled(Text, {
+  name: 'ButtonText',
+  context: ButtonContext,
+  fontFamily: '$semibold',
+  fontSize: '$h3',
+  color: '$buttonColor',
+})
+
+export const Button = withStaticProperties(ButtonFrame, {
+  Props: ButtonContext.Provider,
+  Text: ButtonText,
 })

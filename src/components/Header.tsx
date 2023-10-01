@@ -5,21 +5,22 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ChevronLeft, Settings } from '@tamagui/lucide-icons'
 import { Button } from './ui/Button'
 import { useRouter } from 'expo-router'
+import { IconButton } from './ui/IconButton'
 
 type Props = StackProps & {
-  settingsOnPress?: () => void
   goBack?: boolean
   title?: string
+  leftChildren?: React.ReactNode
+  rightChildren?: React.ReactNode
 }
 
 export default function Header({
-  settingsOnPress,
-  goBack,
   title,
+  leftChildren,
+  rightChildren,
   ...props
 }: Props) {
   const { top } = useSafeAreaInsets()
-  const router = useRouter()
 
   return (
     <XStack
@@ -32,43 +33,13 @@ export default function Header({
       {...props}
     >
       <Stack w={50} h={50}>
-        {goBack && (
-          <Button
-            w={50}
-            h={50}
-            ai={'center'}
-            jc={'center'}
-            bg={'$transparent'}
-            onPress={() => router.back()}
-            pressStyle={{
-              scale: 0.97,
-              bg: '$transparent',
-            }}
-          >
-            <ChevronLeft size={30} color={'$textColor'} />
-          </Button>
-        )}
+        {leftChildren}
       </Stack>
       <Text f={1} h3 semibold center>
         {title}
       </Text>
       <Stack w={50} h={50}>
-        {settingsOnPress && (
-          <Button
-            w={50}
-            h={50}
-            ai={'center'}
-            jc={'center'}
-            bg={'$transparent'}
-            onPress={settingsOnPress}
-            pressStyle={{
-              scale: 0.97,
-              bg: '$transparent',
-            }}
-          >
-            <Settings size={23} color={'$textColor'} />
-          </Button>
-        )}
+        {rightChildren}
       </Stack>
     </XStack>
   )

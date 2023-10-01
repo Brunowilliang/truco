@@ -102,11 +102,13 @@ export default function Winner() {
         {params.name}
       </Text>
       <Trophy />
+
       <Button width={'100%'} mb={10} onPress={resetGame} borderRadius={10}>
-        Novo Jogo
+        <Button.Text>Novo Jogo</Button.Text>
       </Button>
+
       <Button width={'100%'} onPress={resetGameAndInput} borderRadius={10}>
-        Novo Jogo e Novos Times
+        <Button.Text>Novo Jogo e Novos Times</Button.Text>
       </Button>
     </Stack>
   )

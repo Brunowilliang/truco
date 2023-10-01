@@ -1,10 +1,10 @@
 import React from 'react'
 import { Stack, XStack } from 'tamagui'
 import { Text } from './ui/Text'
-import { Button } from './ui/Button'
 import { Github, Linkedin, Twitter } from '@tamagui/lucide-icons'
 import { Linking } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { IconButton } from './ui/IconButton'
 
 const TWITTER_URL = 'https://twitter.com/Brunowgarcia'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/brunowilliang'
@@ -36,30 +36,15 @@ export default function About() {
       </Stack>
 
       <XStack gap={10}>
-        <Button
-          secondary
-          f={1}
-          onPress={() => openUrl(TWITTER_URL)}
-          accessibilityLabel="Abrir Twitter"
-        >
+        <IconButton secondary f={1} onPress={() => openUrl(TWITTER_URL)}>
           <Twitter size={25} color="$textColor" />
-        </Button>
-        <Button
-          secondary
-          f={1}
-          onPress={() => openUrl(LINKEDIN_URL)}
-          accessibilityLabel="Abrir LinkedIn"
-        >
+        </IconButton>
+        <IconButton secondary f={1} onPress={() => openUrl(LINKEDIN_URL)}>
           <Linkedin size={25} color="$textColor" />
-        </Button>
-        <Button
-          secondary
-          f={1}
-          onPress={() => openUrl(GITHUB_URL)}
-          accessibilityLabel="Abrir GitHub"
-        >
+        </IconButton>
+        <IconButton secondary f={1} onPress={() => openUrl(GITHUB_URL)}>
           <Github size={25} color="$textColor" />
-        </Button>
+        </IconButton>
       </XStack>
       <Text h5 center>
         Siga-me nas redes sociais.

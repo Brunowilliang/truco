@@ -11,6 +11,8 @@ import { useInterstitialAd } from 'react-native-google-mobile-ads'
 import { getAdUnitId } from '@/utils/adConfig'
 import Menu from '@/components/Menu'
 import { GameProps, useGameStore } from '@/store/useGameStore'
+import { IconButton } from '@/components/ui/IconButton'
+import { Settings } from '@tamagui/lucide-icons'
 
 export default function index() {
   const { bottom } = useSafeAreaInsets()
@@ -50,7 +52,11 @@ export default function index() {
     <>
       <Header
         title="Contador de truco"
-        settingsOnPress={() => setOpenModalMenu(true)}
+        rightChildren={
+          <IconButton right onPress={() => setOpenModalMenu(true)}>
+            <Settings size={23} color={'$textColor'} />
+          </IconButton>
+        }
       />
       <ScrollView
         contentContainerStyle={{ flex: 1 }}
