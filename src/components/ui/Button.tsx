@@ -19,7 +19,7 @@ export const ButtonFrame = styled(Stack, {
   borderWidth: 0,
   alignItems: 'center',
   justifyContent: 'center',
-  bg: '$blue',
+  bg: '$primary',
   pressStyle: {
     scale: 0.98,
     opacity: 0.8,
@@ -29,7 +29,6 @@ export const ButtonFrame = styled(Stack, {
     secondary: {
       true: {
         bg: '$contrast',
-        color: '$textColor',
         pressStyle: {
           bg: '$contrast',
           opacity: 0.8,
@@ -51,7 +50,7 @@ export const ButtonText = styled(Text, {
   context: ButtonContext,
   fontFamily: '$semibold',
   fontSize: '$h3',
-  color: '$buttonColor',
+  color: '$accent',
 })
 
 export const Button = withStaticProperties(ButtonFrame, {

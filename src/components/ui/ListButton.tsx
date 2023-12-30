@@ -5,6 +5,8 @@ import {
   styled,
   withStaticProperties,
 } from 'tamagui'
+import Icon, { IconProps } from './Icon'
+import ExpoIcon, { ExpoIconProps, IconLibraryNames } from './ExpoIcon'
 
 export const ButtonContext = createStyledContext({})
 
@@ -20,7 +22,7 @@ export const ListFrame = styled(Stack, {
   padding: 20,
   borderRadius: 0,
   justifyContent: 'flex-start',
-  bg: '$contrast',
+  bg: '$accent',
   pressStyle: {
     opacity: 0.8,
   },
@@ -48,10 +50,35 @@ export const ListText = styled(Text, {
   flex: 1,
   fontFamily: '$medium',
   fontSize: '$h4',
-  color: '$textColor',
+  color: '$textPrimary',
 })
+
+const IconFrame = ({ name, size, weight, ...props }: IconProps) => {
+  // const { variant } = useContext(IconButtonContext.context)
+  return (
+    <Icon
+      name={name}
+      color={'$textPrimary'}
+      size={size || 20}
+      weight={weight || 'Linear'}
+      {...props}
+    />
+  )
+}
+
+const ExpoIconFrame = ({
+  size,
+  color,
+  ...props
+}: ExpoIconProps<IconLibraryNames>) => {
+  return (
+    <ExpoIcon color={color || '$textPrimary'} size={size || 20} {...props} />
+  )
+}
 
 export const ListButton = withStaticProperties(ListFrame, {
   Props: ButtonContext.Provider,
   Text: ListText,
+  Icon: IconFrame,
+  ExpoIcon: ExpoIconFrame,
 })

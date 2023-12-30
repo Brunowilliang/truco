@@ -1,12 +1,13 @@
+import { RFValue } from 'react-native-responsive-fontsize'
 import { createFont } from 'tamagui'
 
 const sizes = {
-  h1: 36,
-  h2: 24,
-  h3: 18,
-  h4: 16,
-  h5: 14,
-  h6: 12,
+  h1: RFValue(20),
+  h2: RFValue(18),
+  h3: RFValue(16),
+  h4: RFValue(14),
+  h5: RFValue(13),
+  h6: RFValue(11),
 }
 
 export const regular = createFont({

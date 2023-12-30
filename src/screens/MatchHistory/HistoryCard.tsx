@@ -1,7 +1,7 @@
 import { Trophy } from '@tamagui/lucide-icons'
 import React from 'react'
 import { Stack, XStack } from 'tamagui'
-import { Text } from './ui/Text'
+import { Text } from '@/components/ui/Text'
 
 type Props = {
   team: string
@@ -22,7 +22,7 @@ export default function HistoryCard({ team, score, winnerA, winnerB }: Props) {
         borderBottomLeftRadius={winnerB ? 0 : 10}
         ai={'center'}
         jc={'center'}
-        bg={winnerA || winnerB ? '$blue' : '$textColor'}
+        bg={winnerA || winnerB ? '$blue' : '$textPrimary'}
         position="absolute"
         display={winnerA || winnerB ? 'flex' : 'none'}
         left={winnerA ? 0 : null}
@@ -37,14 +37,14 @@ export default function HistoryCard({ team, score, winnerA, winnerB }: Props) {
           h4
           semibold
           numberOfLines={1}
-          color={winnerA || winnerB ? '$blue' : '$textColor'}
+          color={winnerA || winnerB ? '$blue' : '$textPrimary'}
         >
           {team}
         </Text>
         <Text
           fontSize={30}
           bold
-          color={winnerA || winnerB ? '$blue' : '$textColor'}
+          color={winnerA || winnerB ? '$blue' : '$textPrimary'}
         >
           {score}
         </Text>

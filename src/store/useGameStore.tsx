@@ -25,7 +25,7 @@ export type Store = {
   resetInputs: () => void
 }
 
-export const useGameStore = create<Store>(
+export const useGameStore = create<Store>()(
   persist(
     (set) => ({
       teamA: '',
@@ -33,12 +33,12 @@ export const useGameStore = create<Store>(
       scoreA: 0,
       scoreB: 0,
       games: [],
-      addGame: (game: Game) =>
+      addGame: (gameProps: GameProps) =>
         set((state: Store) => ({
           games: [
             ...state.games,
             {
-              ...game,
+              ...gameProps,
               createdAt: new Date().toISOString(),
             },
           ],
@@ -51,5 +51,5 @@ export const useGameStore = create<Store>(
       name: 'game-storage',
       storage: createJSONStorage(() => AsyncStorage),
     },
-  ) as any,
+  ),
 )

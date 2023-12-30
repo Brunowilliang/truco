@@ -1,32 +1,15 @@
-import { SplashScreen, Stack } from 'expo-router'
-import FontProvider from '@/providers/fontProvider'
+import { Stack } from 'expo-router'
 import Toast from 'react-native-toast-message'
 import React from 'react'
-import useThemeStore from '@/store/useThemeStore'
 import { toastConfig } from '@/theme/toastconfig'
-import ThemeConfig from '@/config/ThemeConfig'
 import 'moment/locale/pt-br'
-
-export { ErrorBoundary } from 'expo-router'
-
-SplashScreen.preventAutoHideAsync()
+import PreloadProvider from '@/providers/PreloadProvider'
+import ThemeProvider from '@/providers/ThemeProvider'
 
 export default function Layout() {
-  const { loaded } = FontProvider()
-
-  if (!loaded) {
-    return null
-  }
-
-  return <RootLayout />
-}
-
-function RootLayout() {
-  const { theme } = useThemeStore()
-
   return (
-    <>
-      <ThemeConfig theme={theme}>
+    <ThemeProvider>
+      <PreloadProvider>
         <Stack
           screenOptions={{
             animation: 'fade',
@@ -35,7 +18,7 @@ function RootLayout() {
           }}
         />
         <Toast config={toastConfig} />
-      </ThemeConfig>
-    </>
+      </PreloadProvider>
+    </ThemeProvider>
   )
 }

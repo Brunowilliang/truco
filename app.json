@@ -4,14 +4,14 @@
     "slug": "contador-de-truco",
     "description": "Contador de Truco",
     "version": "3.0.0",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "platforms": [
       "ios",
       "android"
     ],
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "contadortruco",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "cover",
@@ -36,6 +36,15 @@
       "backgroundColor": "#171719"
     },
     "android": {
+      "splash": {
+        "backgroundColor": "#2666DE",
+        "ldpi": "./assets/images/splash.png",
+        "mdpi": "./assets/images/splash.png",
+        "hdpi": "./assets/images/splash.png",
+        "xhdpi": "./assets/images/splash.png",
+        "xxhdpi": "./assets/images/splash.png",
+        "xxxhdpi": "./assets/images/splash.png"
+      },
       "softwareKeyboardLayoutMode": "pan",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",

@@ -2,25 +2,25 @@ import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+export const themes = ['light', 'dark', 'system'] as const
+export type ThemesProps = (typeof themes)[number]
+
 type ThemeState = {
-  theme: 'light' | 'dark'
-  toggleTheme: () => void
+  currentTheme: ThemesProps
+  selectTheme: (theme: ThemesProps) => void
 }
 
-const useThemeStore = create<ThemeState>(
+const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
-      theme: 'dark',
-      toggleTheme: () =>
-        set((state: ThemeState) => ({
-          theme: state.theme === 'light' ? 'dark' : 'light',
-        })),
+      currentTheme: 'system',
+      selectTheme: (theme: ThemesProps) => set({ currentTheme: theme }),
     }),
     {
-      name: 'theme-storage',
+      name: '@ContadorDeTruco/Theme',
       storage: createJSONStorage(() => AsyncStorage),
     },
-  ) as any,
+  ),
 )
 
 export default useThemeStore

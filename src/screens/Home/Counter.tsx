@@ -1,11 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react'
-import { XStack, YStack } from 'tamagui'
-import { Input } from './ui/Input'
-import { Text } from './ui/Text'
-import { Button } from './ui/Button'
+import { Input } from '@/components/ui/Input'
+import { Text } from '@/components/ui/Text'
+import { Button } from '@/components/ui/Button'
 import { useRouter } from 'expo-router'
-import { useToast } from './ui/Toast'
+import { useToast } from '@/components/ui/Toast'
 import { useGameStore } from '@/store/useGameStore'
+import { HStack, Stack } from '@/components/ui/Stacks'
 
 type Props = {
   placeholder: string
@@ -87,7 +87,7 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
   const isIncreasing = currentScore > lastScore
 
   return (
-    <YStack f={1} gap={10}>
+    <Stack f={1} gap={10}>
       <Input
         placeholder={placeholder}
         textAlign="center"
@@ -112,23 +112,23 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
       >
         {team === 'A' ? scoreA : scoreB}
       </Text>
-      <XStack gap={10}>
+      <HStack gap={10}>
         <Button f={1} onPress={() => updateCount(-3)}>
           <Button.Text>-3</Button.Text>
         </Button>
         <Button f={1} onPress={() => updateCount(3)}>
           <Button.Text>+3</Button.Text>
         </Button>
-      </XStack>
-      <XStack gap={10}>
+      </HStack>
+      <HStack gap={10}>
         <Button f={1} onPress={() => updateCount(-1)}>
           <Button.Text>-1</Button.Text>
         </Button>
         <Button f={1} onPress={() => updateCount(1)}>
           <Button.Text>+1</Button.Text>
         </Button>
-      </XStack>
-      <XStack>
+      </HStack>
+      <HStack>
         <Button
           f={1}
           onPress={() => {
@@ -137,8 +137,8 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
         >
           <Button.Text>Resetar</Button.Text>
         </Button>
-      </XStack>
-    </YStack>
+      </HStack>
+    </Stack>
   )
 }
 

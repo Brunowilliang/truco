@@ -1,13 +1,13 @@
 import { Image } from 'react-native'
 import React from 'react'
-import { Stack, XStack, YStack } from 'tamagui'
 import { colors } from '@/styles/theme'
-import { Text } from './ui/Text'
-import { Button } from './ui/Button'
 import { Copy } from '@tamagui/lucide-icons'
 import * as Clipboard from 'expo-clipboard'
-import { useToast } from './ui/Toast'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Text } from '@/components/ui/Text'
+import { Button } from '@/components/ui/Button'
+import { useToast } from '@/components/ui/Toast'
+import { HStack, Stack } from '@/components/ui/Stacks'
 
 export default function Donate() {
   const { bottom } = useSafeAreaInsets()
@@ -35,7 +35,7 @@ export default function Donate() {
         }}
       />
 
-      <XStack
+      <HStack
         bg={colors.secondary}
         py={5}
         px={10}
@@ -43,14 +43,14 @@ export default function Donate() {
         ai={'center'}
         jc={'center'}
       >
-        <YStack gap={5} f={1}>
+        <Stack gap={5} f={1}>
           <Text h6 semibold left>
             Chave Pix
           </Text>
           <Text h4 semibold left numberOfLines={1}>
             {chavePix}
           </Text>
-        </YStack>
+        </Stack>
         <Button
           w={50}
           h={50}
@@ -65,7 +65,7 @@ export default function Donate() {
         >
           <Copy size={23} color={colors.gray} />
         </Button>
-      </XStack>
+      </HStack>
       <Stack gap={10}>
         <Text h4 center>
           Basta copiar a chave pix acima ou escanear o QR Code e fazer sua
