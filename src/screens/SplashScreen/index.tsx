@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { FadeOut } from 'react-native-reanimated'
-import LottieView from 'lottie-react-native'
 import { AnimatedStack } from '@/components/ui/Stacks'
-import { Image } from 'react-native'
+import { ImageBackground } from 'react-native'
 
 type Props = {
   setSplashReady: (ready: boolean) => void
@@ -12,17 +11,18 @@ export default function Splash({ setSplashReady }: Props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setSplashReady(true)
-    }, 1000)
+    }, 300)
 
     return () => clearTimeout(timer)
   }, [])
 
   return (
     <AnimatedStack f={1} centered bg={'$blue'} exiting={FadeOut}>
-      <Image
+      <ImageBackground
         style={{ width: '100%', height: '100%' }}
-        resizeMode="contain"
+        resizeMode="cover"
         alt="SplashScreen"
+        defaultSource={require('../../../assets/images/splash.png')}
         source={require('../../../assets/images/splash.png')}
       />
     </AnimatedStack>

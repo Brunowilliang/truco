@@ -1,10 +1,19 @@
 import { Stack } from 'expo-router'
-import Toast from 'react-native-toast-message'
 import React from 'react'
-import { toastConfig } from '@/theme/toastconfig'
 import 'moment/locale/pt-br'
 import PreloadProvider from '@/providers/PreloadProvider'
 import ThemeProvider from '@/providers/ThemeProvider'
+import { LogBox } from 'react-native'
+import { Toasts } from '@backpackapp-io/react-native-toast'
+import { vexo } from 'vexo-analytics'
+
+LogBox.ignoreAllLogs()
+
+if (__DEV__) {
+  vexo('')
+} else {
+  vexo(process.env.EXPO_PUBLIC_VEXO_API_KEY || '')
+}
 
 export default function Layout() {
   return (
@@ -17,7 +26,7 @@ export default function Layout() {
             gestureEnabled: false,
           }}
         />
-        <Toast config={toastConfig} />
+        <Toasts />
       </PreloadProvider>
     </ThemeProvider>
   )

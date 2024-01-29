@@ -1,12 +1,14 @@
 import {
   Stack,
-  Text,
   createStyledContext,
   styled,
   withStaticProperties,
 } from 'tamagui'
+import { Text } from './Text'
 
-export const ButtonContext = createStyledContext({})
+export const ButtonContext = createStyledContext({
+  variant: 'primary' as 'primary' | 'secondary' | 'danger',
+})
 
 // @ts-ignore
 export const ButtonFrame = styled(Stack, {
@@ -26,13 +28,15 @@ export const ButtonFrame = styled(Stack, {
   },
 
   variants: {
-    secondary: {
-      true: {
-        bg: '$contrast',
-        pressStyle: {
-          bg: '$contrast',
-          opacity: 0.8,
-        },
+    variant: {
+      primary: {
+        bg: '$primary',
+      },
+      secondary: {
+        bg: '$background',
+      },
+      danger: {
+        bg: '$danger',
       },
     },
     noScale: {
@@ -48,9 +52,22 @@ export const ButtonFrame = styled(Stack, {
 export const ButtonText = styled(Text, {
   name: 'ButtonText',
   context: ButtonContext,
-  fontFamily: '$semibold',
-  fontSize: '$h3',
+  semibold: true,
   color: '$accent',
+
+  variants: {
+    variant: {
+      primary: {
+        color: '$accent',
+      },
+      secondary: {
+        color: '$textPrimary',
+      },
+      danger: {
+        color: '$accent',
+      },
+    },
+  },
 })
 
 export const Button = withStaticProperties(ButtonFrame, {

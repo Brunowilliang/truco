@@ -3,7 +3,19 @@
     "version": ">= 2.1.0"
   },
   "build": {
+    "settings": {
+      "ios": {
+        "resourceClass": "medium"
+      },
+      "android": {
+        "resourceClass": "medium"
+      },
+      "env": {
+        "EXPO_PUBLIC_VEXO_API_KEY": "d796b500-ae98-4f2d-a3cf-0c61c5eb69ac"
+      }
+    },
     "development": {
+      "extends": "settings",
       "developmentClient": true,
       "distribution": "internal",
       "android": {
@@ -14,11 +26,14 @@
       }
     },
     "preview": {
+      "extends": "settings",
       "distribution": "internal",
       "channel": "preview"
     },
     "production": {
+      "extends": "settings",
       "channel": "production",
+      "distribution": "store",
       "autoIncrement": true
     }
   },

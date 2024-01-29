@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback, useState } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { Input } from '@/components/ui/Input'
 import { Text } from '@/components/ui/Text'
 import { Button } from '@/components/ui/Button'
 import { useRouter } from 'expo-router'
-import { useToast } from '@/components/ui/Toast'
 import { useGameStore } from '@/store/useGameStore'
 import { HStack, Stack } from '@/components/ui/Stacks'
+import { useToast } from '@/components/ui/Toast'
 
 type Props = {
   placeholder: string
@@ -16,14 +16,14 @@ type Props = {
 const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
   const { teamA, teamB, scoreA, scoreB, resetScores } = useGameStore()
 
-  const { showToast } = useToast()
+  const toast = useToast()
   const router = useRouter()
 
   const validateTeamName = useCallback((): boolean => {
     if ((team === 'A' && teamA === '') || (team === 'B' && teamB === '')) {
-      showToast({
+      toast.error({
         message: `Preencha o nome da ${placeholder}!`,
-        type: 'error',
+        width: 300,
       })
       return false
     }
@@ -77,15 +77,6 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
     }
   }
 
-  const [lastScore, setLastScore] = useState(team === 'A' ? scoreA : scoreB)
-
-  useEffect(() => {
-    setLastScore(team === 'A' ? scoreA : scoreB)
-  }, [team, scoreA, scoreB])
-
-  const currentScore = team === 'A' ? scoreA : scoreB
-  const isIncreasing = currentScore > lastScore
-
   return (
     <Stack f={1} gap={10}>
       <Input
@@ -94,22 +85,7 @@ const Counter: React.FC<Props> = ({ placeholder, team, onGameEnd }) => {
         value={team === 'A' ? teamA : teamB}
         onChangeText={handleNameChange}
       />
-      <Text
-        fontSize={50}
-        bold
-        center
-        my={10}
-        key={currentScore}
-        animation={'typing'}
-        enterStyle={{
-          opacity: 0,
-          y: isIncreasing ? 30 : -30,
-        }}
-        exitStyle={{
-          opacity: 0,
-          y: isIncreasing ? -30 : 30,
-        }}
-      >
+      <Text bold center fontSize={50} my={10}>
         {team === 'A' ? scoreA : scoreB}
       </Text>
       <HStack gap={10}>

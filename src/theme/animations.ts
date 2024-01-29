@@ -29,7 +29,7 @@ export const animations = createAnimations({
   },
   theme: {
     type: 'timing',
-    duration: 500,
+    duration: 350,
     damping: 1,
     mass: 1,
     stiffness: 100,

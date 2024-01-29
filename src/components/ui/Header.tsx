@@ -1,79 +1,85 @@
-import React, { ReactNode, Children, isValidElement } from 'react'
-import { Text } from './Text'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { GetProps } from 'tamagui'
-import { HStack } from './Stacks'
+import {
+	createStyledContext,
+	styled,
+	withStaticProperties,
+	GetProps,
+	getTokenValue,
+} from "tamagui";
+import { HStack, Stack } from "@/components/ui/Stacks";
+import { useContext } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-interface HeaderProps extends GetProps<typeof HStack> {
-  children: ReactNode
-  noSafeArea?: boolean
-}
+export const HeaderContext = createStyledContext({
+	noSafeArea: false as boolean,
+});
 
-interface HStackProps extends GetProps<typeof HStack> {}
-interface TextProps extends GetProps<typeof Text> {}
+// @ts-ignore
+export const HeaderComponente = styled(HStack, {
+	name: "Header",
+	context: HeaderContext,
+	width: "100%",
+	px: "$md",
+	pb: "$sm",
+	alignItems: "center",
+	justifyContent: "space-between",
+	bg: "$accent",
 
-const Header = ({ children, noSafeArea, ...props }: HeaderProps) => {
-  const { top } = useSafeAreaInsets()
-  const childrenArray = Children.toArray(children)
-  const hasLeft = childrenArray.some(
-    (child) => isValidElement(child) && child.type === Left,
-  )
-  const hasRight = childrenArray.some(
-    (child) => isValidElement(child) && child.type === Right,
-  )
+	animation: "theme",
+	enterStyle: {
+		opacity: 0,
+		y: -20,
+	},
+	exitStyle: {
+		opacity: 0,
+		y: -20,
+	},
+});
 
-  return (
-    <HStack
-      pt={noSafeArea ? '$sm' : top + 10}
-      $platform-android={{ pt: top + 10 }}
-      px={'$md'}
-      pb={'$sm'}
-      bg={'$accent'}
-      jc={'space-between'}
-      ai={'center'}
-      {...props}
-    >
-      {hasLeft ? (
-        childrenArray.filter(
-          (child) => isValidElement(child) && child.type === Left,
-        )
-      ) : (
-        <HStack w={'15%'} />
-      )}
-      {childrenArray.filter(
-        (child) => isValidElement(child) && child.type === Title,
-      )}
-      {hasRight ? (
-        childrenArray.filter(
-          (child) => isValidElement(child) && child.type === Right,
-        )
-      ) : (
-        <HStack w={'15%'} />
-      )}
-    </HStack>
-  )
-}
+type HeaderComponenteProps = GetProps<typeof HeaderComponente>;
 
-const Left = ({ children, ...props }: HStackProps) => (
-  <HStack w={'15%'} jc={'flex-start'} {...props}>
-    {children}
-  </HStack>
-)
+const HeaderFrame = ({ ...props }: HeaderComponenteProps) => {
+	const { noSafeArea } = useContext(HeaderContext.context);
+	const { top } = useSafeAreaInsets();
+	const md = getTokenValue("$size.md");
+	const paddingTop = noSafeArea ? md : top + md;
 
-const Title = ({ children, ...props }: TextProps) => (
-  <Text h3 center f={1} semibold {...props}>
-    {children}
-  </Text>
-)
+	return (
+		<HeaderComponente
+			pt={paddingTop}
+			$platform-android={{
+				pt: paddingTop + 20,
+			}}
+			{...props}
+		/>
+	);
+};
 
-const Right = ({ children, ...props }: HStackProps) => (
-  <HStack w={'15%'} jc={'flex-end'} {...props}>
-    {children}
-  </HStack>
-)
+export const HeaderCenter = styled(Stack, {
+	name: "HeaderCenter",
+	context: HeaderContext,
+	width: "70%",
+	centered: true,
+});
 
-Header.Left = Left
-Header.Title = Title
-Header.Right = Right
+export const HeaderRight = styled(HStack, {
+	name: "HeaderRight",
+	context: HeaderContext,
+	width: "15%",
+	justifyContent: "flex-end",
+	gap: -15,
+});
 
-export default Header
+export const HeaderLeft = styled(HStack, {
+	name: "HeaderLeft",
+	context: HeaderContext,
+	width: "15%",
+	justifyContent: "flex-start",
+	gap: -15,
+});
+
+export const Header = withStaticProperties(HeaderFrame, {
+	Props: HeaderContext.Provider,
+	Center: HeaderCenter,
+	Right: HeaderRight,
+	Left: HeaderLeft,
+});
